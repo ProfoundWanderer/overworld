@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Moment from "react-moment";
+import moment from "moment"
 import { Container, Grid } from "semantic-ui-react";
+import ShowMoreText from "react-show-more-text";
+import {Helmet} from "react-helmet";
 import { Backdrop, Footer, Cover, Ratings } from "../app/components/";
 import {
   Details,
@@ -14,7 +17,6 @@ import {
   Screenshots
 } from "./components/";
 import "./styles.css";
-import ShowMoreText from 'react-show-more-text';
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -84,6 +86,11 @@ export default class Game extends React.Component {
     const { game, isLoading } = this.state;
     return (
       <React.Fragment>
+        state.title ? (
+        <Helmet>
+            <title>{game.name + " (" + moment(game.first_release_date * 1000).format("YYYY") +") • Overworld"}</title>
+        </Helmet>
+        ) : null
         <Container>
           <Grid className="game" centered>
             {!isLoading && this.state.game.screenshots && (

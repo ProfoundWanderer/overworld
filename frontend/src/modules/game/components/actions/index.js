@@ -6,7 +6,22 @@ import { LogIn } from "../../../app/components";
 import LogModal from "../log-modal";
 import Buttons from "./Buttons";
 import Ratings from "./Rating";
+import Share from "./Share";
 import "./styles.css";
+
+class Hoverable extends React.Component {
+    state = { hovered: false };
+    render() {
+        return (
+            <div
+                onMouseEnter={() => this.setState({ hovered: true })}
+                onMouseLeave={() => setTimeout(() => {this.setState({ hovered: false })}, 1500)}
+            >
+                {this.props.children(this.state.hovered)}
+            </div>
+        );
+    }
+}
 
 class Actions extends React.Component {
   handleChange = (event, { name, value }) => {
@@ -33,7 +48,11 @@ class Actions extends React.Component {
         ) : (
           <LogIn loginText="Sign in to log, rate or review..." />
         )}
-        <Menu.Item content="Share..." link />
+        <Menu.Item>
+          <Hoverable>
+            {hovered => <div>{hovered ? <Share game={this.props.game} /> : "Share..."}</div>}
+          </Hoverable>
+        </Menu.Item>
       </Menu>
     );
   }
