@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Icon, Popup } from "semantic-ui-react";
+import { Grid, Icon, Popup, Form } from "semantic-ui-react";
 import moment from "moment";
 import {
   FacebookShareButton,
@@ -14,7 +14,10 @@ class Share extends React.Component {
     return (
       <React.Fragment>
         <Grid className="action-buttons">
-          <Grid.Row columns={4} verticalAlign="middle">
+          <Grid.Row columns={3} verticalAlign="middle">
+            <Grid.Column>
+              <Form.Input type="text" placeholder="https://google.com/" readOnly />
+            </Grid.Column>
             <Grid.Column>
               <FacebookShareButton url={window.location.href}>
                 <Popup
@@ -41,33 +44,6 @@ class Share extends React.Component {
                   inverted
                 />
               </TwitterShareButton>
-            </Grid.Column>
-            <Grid.Column textAlign="center">
-              <RedditShareButton url={window.location.href}>
-                <Popup
-                  trigger={<Icon link size="big" name="reddit alien" />}
-                  content={"Reddit"}
-                  position="top center"
-                  size="tiny"
-                  inverted
-                />
-              </RedditShareButton>
-            </Grid.Column>
-            <Grid.Column textAlign="center">
-              <EmailShareButton
-                url={window.location.href}
-                subject={`Check out ${this.props.game.name} (${moment(
-                  this.props.game.first_release_date * 1000
-                ).format("YYYY")}) on Overworld!`}
-              >
-                <Popup
-                  trigger={<Icon link size="big" name="envelope" />}
-                  content={"Email"}
-                  position="top center"
-                  size="tiny"
-                  inverted
-                />
-              </EmailShareButton>
             </Grid.Column>
           </Grid.Row>
         </Grid>
