@@ -9,26 +9,31 @@ import Ratings from "./Rating";
 import Share from "./Share";
 import "./styles.css";
 
-class Hoverable extends React.Component {
-    state = { hovered: false };
-    render() {
-        return (
-            <div
-                onMouseEnter={() => this.setState({ hovered: true })}
-                onMouseLeave={() => setTimeout(() => {this.setState({ hovered: false })}, 1500)}
-            >
-                {this.props.children(this.state.hovered)}
-            </div>
-        );
-    }
-}
-
 class Actions extends React.Component {
   handleChange = (event, { name, value }) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }
   };
+
+  constructor(props) {
+    super(props);
+    this.handleMouseHover = this.handleMouseHover.bind(this);
+    this.state = {
+      isHovering: false,
+    };
+  }
+
+  handleMouseHover() {
+    this.setState(this.toggleHoverState);
+  }
+
+  toggleHoverState(state) {
+    return {
+      isHovering: !state.isHovering,
+    };
+  }
+
 
   render() {
     return (
@@ -49,9 +54,20 @@ class Actions extends React.Component {
           <LogIn loginText="Sign in to log, rate or review..." />
         )}
         <Menu.Item>
-          <Hoverable>
-            {hovered => <div>{hovered ? <Share game={this.props.game} /> : "Share..."}</div>}
-          </Hoverable>
+          {!this.state.isHovering &&
+          <div
+          onMouseEnter={this.handleMouseHover}
+          >
+            Share
+          </div>
+          }
+          {this.state.isHovering &&
+          <div
+          onMouseLeave={this.handleMouseHover}
+          >
+            <Share game={this.props.game}/>
+          </div>
+        }
         </Menu.Item>
       </Menu>
     );

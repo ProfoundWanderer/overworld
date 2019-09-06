@@ -3,9 +3,7 @@ import { Grid, Icon, Popup, Form } from "semantic-ui-react";
 import moment from "moment";
 import {
   FacebookShareButton,
-  TwitterShareButton,
-  RedditShareButton,
-  EmailShareButton
+  TwitterShareButton
 } from "react-share";
 import "font-awesome/css/font-awesome.min.css";
 
